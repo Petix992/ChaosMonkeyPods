@@ -30,7 +30,7 @@ If you want activate this feature you'll have to set these two variables in this
         value: "target_label"
 
 and re-dploy the application **kubectl apply -f ChaosMonkeyDeployment.yaml**. 
-Alternatively you can set them at run time by using **kubectl edit deployment chaos-monkey **
+Alternatively you can set them at run time by using **kubectl edit deployment chaos-monkey**. 
 
 
 
