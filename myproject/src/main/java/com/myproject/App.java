@@ -6,6 +6,7 @@ import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import io.fabric8.kubernetes.client.KubernetesClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.myproject.ChaosMonkeyPod;
 
 public class App 
 {
