@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class ChaosMonkeyPod {
 
-    private Pod pickRandom(List<Pod> targets) {
+  private Pod pickRandom(List<Pod> targets) {
 
         Random rand = new Random();
         
@@ -26,29 +26,44 @@ public class ChaosMonkeyPod {
         return randomPod;
     }
         
-public void killPod() {
+public void killPods() {
 try (KubernetesClient client = new KubernetesClientBuilder().build()) {
     
+  Logger logger = LoggerFactory.getLogger(ChaosMonkeyPod.class); 
+  
+  String killenv = System.getenv("KILL_BYLABEL");
   String namespace = "testing";
 
   PodList pods = client.pods().inNamespace(namespace).list();
-    
+  PodList labelpods = client.pods().inNamespace(namespace).withLabel("key").list();
+  
   List<Pod> targets = new ArrayList<>();
 
-    if (pods != null) {
-        List<Pod> podList = pods.getItems();
-          for (Pod pod : podList) {
-              targets.add(pod);            
-           }
-           
-           String message = null;
-           Pod pod = null;
-           
-           if (targets.size() > 0) {
-             pod = pickRandom(targets);
-           }
-         
+  Pod randomPod = null;
+
+     if (pods != null && killenv.equals("true")){
+      List<Pod> podList = labelpods.getItems();
+      for (Pod pod : podList) {
+           targets.add(pod);            
+         }
+          if (targets.size() > 0) {
+             randomPod = pickRandom(targets);
+              String podName = randomPod.getMetadata().getName();
+              client.pods().inNamespace(namespace).withName(podName).delete();               
+              logger.info("Chaos Monkey deleted labeled pod: " + podName);             
+         }
+    } else {
+      List<Pod> podList = pods.getItems();
+      for (Pod pod : podList) {
+            targets.add(pod);            
+       }                                 
+          if (targets.size() > 0) {
+            randomPod = pickRandom(targets);
+            String podName = randomPod.getMetadata().getName();
+            client.pods().inNamespace(namespace).withName(podName).delete();               
+            logger.info("Chaos Monkey deleted random pod: "+ podName);                
+         }                          
         }
-     }
-   }
+      }
+    }
 }
