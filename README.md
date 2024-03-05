@@ -1,4 +1,4 @@
-# MyProject
+# Chaos Monkey Pods
 This project  has been created in order to test the robustness of a kubernetes cluster by deploying a java application that randomly kills pods inside a namespace in a given scheduled time (right now is set for 10 second) 
 
 For this application has been used [fabric8io/kubernetes-client](https://github.com/fabric8io/kubernetes-client) in order to interact in very easy way with Kubernetes API
