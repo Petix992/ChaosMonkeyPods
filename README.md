@@ -3,6 +3,8 @@ This project  has been created in order to test the robustness of a kubernetes c
 
 For this application has been used [fabric8io/kubernetes-client](https://github.com/fabric8io/kubernetes-client) in order to interact in very easy way with Kubernetes API
 
+![_94ad819e-00c1-4265-bb0c-9398ef12f039](https://github.com/Petix992/ChaosMonkeyPods/assets/126627628/ecb4b0c2-9ed2-4cb2-9b2d-7f08d2d90692)
+
 ## How to
 
 ### Docker Image
